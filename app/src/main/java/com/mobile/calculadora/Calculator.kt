@@ -14,6 +14,7 @@ class Calculator {
         set(value) {
             field = value
                 .reduceSignRules()
+                .normalizeOperations()
                 .normalizeDecimalSeparator()
         }
 
@@ -65,5 +66,10 @@ class Calculator {
         }
 
         private fun String.normalizeDecimalSeparator(): String = this.replace(',', '.')
+        private fun String.normalizeOperations(): String = if (this[0] == '+') {
+            val sb = StringBuilder(this)
+            sb.insert(0, '0')
+            sb.toString()
+        } else this
     }
 }
